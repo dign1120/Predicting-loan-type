@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_curve, average_precision_score
 
-CSV_PATH = "migration_population_balanced.csv"
+CSV_PATH = "backend/migration_population_balanced.csv"
 BATCH_SIZE = 128
 USE_CUDA = torch.cuda.is_available()
 DEVICE = torch.device("cuda" if USE_CUDA else "cpu")
@@ -60,18 +60,18 @@ class Net(nn.Module):
     
 
 
-dataset = CustomDataset(CSV_PATH)
-test_dataset = torch.load("model/test_dataset.pth")   # 이관받은 테스트 셋 사용
+# dataset = CustomDataset(CSV_PATH)
+# test_dataset = torch.load("backend/model/test_dataset.pth")   # 이관받은 테스트 셋 사용
 
-test_loader = DataLoader(
-    dataset = test_dataset,
-    batch_size = BATCH_SIZE,
-    shuffle = True,
-    )
+# test_loader = DataLoader(
+#     dataset = test_dataset,
+#     batch_size = BATCH_SIZE,
+#     shuffle = True,
+#     )
 
-model = Net()
-model.load_state_dict(torch.load('model/migration_model.pt')) # 이관받은 모델 사용
-model.to(DEVICE)
+# model = Net()
+# model.load_state_dict(torch.load('backend/model/migration_model.pt')) # 이관받은 모델 사용
+# model.to(DEVICE)
 
 
 ### confusion matrix plot for testloader
@@ -199,10 +199,10 @@ def predict_class(model, data, dataset, device):
 
 
 #plot_confusion_matrix(model, test_loader)               # plot confusion-matrix
-plot_precision_recall(model, test_loader)               # plot PR-Curve each classes
+#plot_precision_recall(model, test_loader)               # plot PR-Curve each classes
 #evaluate(model, test_loader)                            # evaluate with accuracy
 
 
 # specific data test ( population, net_migration, incomeLevelRank)
-specific_data = np.array([80000, -3000, 1])             
-predict_class(model, specific_data, dataset, DEVICE)
+#specific_data = np.array([80000, -3000, 1])             
+#predict_class(model, specific_data, dataset, DEVICE)
